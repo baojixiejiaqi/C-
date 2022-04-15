@@ -1,13 +1,16 @@
 #include<stdio.h>
+#include<string.h>
+#include<windows.h>
 int main() {
 	char arr1[] = { "山高狐狸野 八重是我姐"};
-	char arr2[] = { "一二三四五 金木水火土" };
+	char arr2[] = { "一二三四五 上山打老虎" };
 	int left = 0;
 	int right = strlen(arr1) - 1;
 	while (left<= right) {
 		arr2[left] = arr1[left];
 		arr2[right] = arr1[right];
 		printf("%s\n", arr2);
+		Sleep(1000);
 		right--;
 		left++;
 	}
