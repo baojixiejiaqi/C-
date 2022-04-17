@@ -1,3 +1,4 @@
+#include<stdio.h>
 int main()
 {
  int arr[] = {1,2,3,4,5,6,7,8,9,10};
@@ -23,4 +24,21 @@ int main()
  printf("找到了,下标是%d\n", mid);
  else
  printf("找不到\n");
+}
+#include<stdio.h>
+int binary_search(int arr[],int k)
+{
+
+}
+int main()
+{
+ int arr[] = {0,1,2,3,4,5,6,7,8,9};
+ int k = 7;
+ int ret = binary_search(arr,k);
+ if(ret==-1){
+ printf("找不到对应的数字\n");
+}
+else
+{
+printf("找到了：%d\n",ret);
 }
