@@ -18,20 +18,30 @@ int main()
   return 0;
 }
 #include<stdio.h>
-void Swap(int *pa,int *pb)
+void Swap1(int a, int b)
 {
-  int temp = 0;
-  temp =*pa;
-  *pa = *pb;
-  *pb = temp;
+	int temp = 0;
+	temp = a;
+	a = b;
+	b = temp;
 }
-   
+void Swap2(int* pa, int* pb)
+{
+	int temp = 0;
+	temp = *pa;
+	*pa = *pb;
+	*pb = temp;
+}
+//当实参传给形参的时候：形参只是实参的一份临时拷贝，对形参的任何修改不会改变实参
+//所以Swap1函数调换不了，Swap2函数可以调换
 int main()
 {
-  int a =20;
-  int b =30;
-  print("a=%d b=%d\n",a,b);
-  Swap(&a,&b);
-  printf("a=%d b=%d\n",a,b);
-  return 0;
+	int a = 20;
+	int b = 30;
+	printf("a=%d b=%d\n", a, b);
+	Swap1(a, b);
+	printf("a=%d b=%d\n", a, b);
+	Swap2(&a, &b);
+	printf("a=%d b=%d\n", a, b);
+	return 0;
 }
