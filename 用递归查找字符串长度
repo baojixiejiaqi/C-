@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include<stdio.h>//函数的方法
 #include<string.h>
 int my_strlen(char *str)
 {
@@ -15,5 +15,25 @@ int main()
 	char arr[] = "bit";
 	int len = my_strlen(arr);
 	printf("len= %d ", len);
+	return 0;
+}
+#include<stdio.h>//用递归来求长度
+#include<string.h>
+int my_strlen(char *str)
+{
+	if (*str != '\0')
+	{
+		return 1 + my_strlen(1 + str);
+	}
+	else
+	{
+		return 0;
+	}
+}
+int main()
+{
+	char arr[] = "bit";
+	int len = my_strlen(arr);
+	printf("len = %d", len);
 	return 0;
 }
