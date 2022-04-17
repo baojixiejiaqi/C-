@@ -24,21 +24,40 @@ int main()
  printf("找到了,下标是%d\n", mid);
  else
  printf("找不到\n");
-}
+}                  
 #include<stdio.h>
-int binary_search(int arr[],int k)
-{
-
+                   //从主函数传过来的其实是数组第一个数的地址而不是整个数组，本质上arr[]是一个指针
+	int binary_search(int arr[], int k,int sz)
+	{
+		int left = 0;
+		int right = sz - 1;
+		while (left <= right) {
+		int mid = (left + right) / 2;
+		if (arr[mid] < k)
+		{
+			left = mid + 1;
+		}
+		else if (arr[mid] > k)
+		{
+			right = mid - 1;
+		}
+		else {
+			return mid;
+		}
+	}
+	return -1;
 }
 int main()
 {
- int arr[] = {0,1,2,3,4,5,6,7,8,9};
- int k = 7;
- int ret = binary_search(arr,k);
- if(ret==-1){
- printf("找不到对应的数字\n");
-}
-else
-{
-printf("找到了：%d\n",ret);
+	int arr[] = { 0,1,2,3,4,5,6,7,8,10,11 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	int k = 7;
+	int ret = binary_search(arr, k,sz);
+	if (ret == -1) {
+		printf("找不到对应的数字\n");
+	}
+	else
+	{
+		printf("找到了：%d \n", ret);
+	}
 }
