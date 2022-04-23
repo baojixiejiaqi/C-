@@ -63,3 +63,19 @@ int main(){
 	printf("%d 里面含有%d个1",i,count);
 	return 0;
 }
+#include <stdio.h>//高效算法
+int count_one(int n) {
+	int count = 0;
+	while (n) {
+		n = n & (n - 1);
+		count++;
+	}
+	return count;
+}
+int main(){
+	int i = 0;
+	scanf("%d", &i);
+	int count = count_one(i);
+	printf("%d 里面含有%d个1",i,count);
+	return 0;
+}
