@@ -36,7 +36,7 @@ int main()
 	Print(arr, sz);
 	return 0;
 }
-#include <stdio.h>
+#include <stdio.h>//函数求反
 int Strlen(char *str) {
 	int count = 0;
 	while (*str != '\0') {
@@ -55,6 +55,35 @@ void reverse(char arr[]) {
 		left++;
 		right--;
 	}
+}
+
+int main()
+{
+	char arr[] = "abcedfghijklmn";
+	reverse(arr);
+	printf("%s\n", arr);
+	return 0;
+}
+#include <stdio.h>//递归求反
+int Strlen(char *str) {
+	int count = 0;
+	while (*str != '\0') {
+		count++;
+		str++;
+	}
+	return count;
+}
+void reverse(char arr[])//a b c d e f
+{
+	int len = Strlen(arr);
+	char tmp =arr[0];
+	arr[0] = arr[len - 1];
+	arr[len - 1] = '\0';
+	if (Strlen(arr + 1) >= 2) {
+		reverse(arr + 1);
+	}
+	arr[len - 1] = tmp;
+
 }
 
 int main()
