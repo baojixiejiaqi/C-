@@ -1,0 +1,22 @@
+#include <stdio.h>
+print(int i) {
+	int n = 0;
+	printf("奇数位为:");
+	for (n = 30; n >= 0; n-=2)
+	{
+		printf("%d ", (((i) >> n) & 1));
+	}
+	printf("\n");
+	printf("偶数位为:");
+	for (n = 31; n >= 0; n -= 2) 
+	{
+		printf("%d ", (((i) >> n) & 1));
+	}
+}
+int main()
+{
+	int i = 0;
+	scanf("%d", &i);
+	print(i);
+	return 0;
+}
