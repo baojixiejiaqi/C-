@@ -45,3 +45,21 @@ int main()
  printf("二进制中1的个数 = %d\n",count);
  return 0;
 }
+#include <stdio.h>//利用函数计算
+int count_one(int i) {
+	int count = 0;
+	while(i) {
+		if (i % 2 == 1) {
+			count++;
+		}
+		i =i/ 2; 
+	}
+	return count;
+}
+int main(){
+	int i = 0;
+	scanf("%d", &i);
+	int count = count_one(i);
+	printf("%d 里面含有%d个1",i,count);
+	return 0;
+}
