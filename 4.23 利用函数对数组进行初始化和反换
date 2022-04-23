@@ -36,3 +36,31 @@ int main()
 	Print(arr, sz);
 	return 0;
 }
+#include <stdio.h>
+int Strlen(char *str) {
+	int count = 0;
+	while (*str != '\0') {
+		count++;
+		str++;
+	}
+	return count;
+}
+void reverse(char arr[]) {
+	int left = 0;
+	int right = Strlen(arr)-1;
+	while (left < right) {
+		int tmp = arr[left];
+		arr[left] = arr[right];
+		arr[right] = tmp;
+		left++;
+		right--;
+	}
+}
+
+int main()
+{
+	char arr[] = "abcedfghijklmn";
+	reverse(arr);
+	printf("%s\n", arr);
+	return 0;
+}
