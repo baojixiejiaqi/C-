@@ -1,5 +1,6 @@
 #include <stdio.h>
-print(int i) {
+print(int i)
+{
 	int n = 0;
 	printf("奇数位为:");
 	for (n = 30; n >= 0; n-=2)
