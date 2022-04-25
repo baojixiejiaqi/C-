@@ -20,7 +20,7 @@ int main()
 }
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
-void my_strcpy(char* dest, char* src)//8分代码
+void my_strcpy(char* dest, char* src)//6.5分代码
 {
 	while (*src != '\0')
 	{
@@ -40,7 +40,7 @@ int main()
 }
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
-void my_strcpy(char* dest, char* src)//10分
+void my_strcpy(char* dest, char* src)//7分
 {
 	while (*dest++ = *src++)//借助\0的阿斯克码值为0，进入循环，条件为假所以直接跳出循环结束
 	{
@@ -58,3 +58,25 @@ int main()
 	return 0;
 
 }
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<assert.h>
+void my_strcpy(char* dest, char* src)//8分
+{
+		assert(dest!= NULL && src!=NULL);//如果程序正常运行不执行，如果程序有问题就会报错	
+		while (*dest++ = *src++)
+		{
+			;
+
+		}
+}
+int main()
+{
+	char arr1[] = "*************";
+	char arr2[] = "bit";
+	my_strcpy(arr1, arr2);
+	printf("%s\n", arr1);
+	return 0;
+
+}
+
