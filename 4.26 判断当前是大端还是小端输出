@@ -1,0 +1,19 @@
+#include <stdio.h>
+int check_sys()
+{
+ int i = 1;
+ return (*(char *)&i);//char*这个指针只能使用一个字节，也就是八个比特位，所以01在前面就会得到1从输出小端，反之同理。
+}
+int main()
+{
+ int ret = check_sys();
+ if(ret == 1)
+ {
+ printf("小端\n");
+ }
+ else
+ {
+ printf("大端\n");
+ }
+ return 0;
+}
