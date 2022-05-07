@@ -1,0 +1,19 @@
+#include<stdio.h>
+#pragma warning(disable : 4996)
+int main()
+{
+	//喝汽水，一瓶汽水1元，2个空瓶可以换一个汽水，给20元，可以喝多少瓶？
+	int money = 0;
+	int total = 0;
+	int empty = 0;
+	scanf("%d", &money);
+	//买回来的汽水
+	total = money;
+	empty = money;
+	//换回来的汽水
+	while (empty >= 2) {
+		total += empty / 2;
+		empty = empty / 2 + empty % 2;
+	}
+	printf("total = %d", total);
+}
