@@ -1,0 +1,67 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+#pragma warning(disable : 4996)
+//暴力求解法
+//void left_move(char* arr, int n)
+//{
+//	assert(arr != NULL);
+//	int len = strlen(arr);
+//	if (len < n) {
+//		printf("数值溢出\n");
+//	}
+//	else if (len == n) {
+//		return;
+//	}
+//	else
+//	{	
+//		int  i = 0;
+//		for (i = 0; i < n; i++)
+//		{
+//			//旋转一个字符
+//			//1.取出第一个元素
+//			char tmp = *arr;
+//			//2.将后面的元素往前挪
+//			int j = 0;
+//			for (j = 0; j < len -1 ; j++) {//bcde
+//				*(arr + j) = *(arr +1+j );//0-1 1-2 2-3 3-4 4-5
+//				//3.将取出的元素放到数组的最后面
+//				*(arr -1 + len) = tmp;
+//			}
+//		}
+//	}
+//}
+//三部翻转法
+//abcdef
+//ba fedc
+//cdefab
+
+void reverse(char* right, char* left) {
+	assert(left!=NULL);
+	assert(right!=NULL);
+	while (left < right) {
+		char tmp = *left;
+		  *left = *right;
+		  *right = tmp;
+		  left++;
+		  right--;
+	}
+}
+void left_move(char* arr, int k) 
+{
+assert(arr);
+int len = strlen(arr);
+reverse(arr, arr + k - 1);//逆序左边
+reverse(arr + k, arr + len - 1);//逆序右边
+reverse(arr, arr + len - 1);//逆序整体
+}
+int main() {
+	int n = 0;
+	printf("请输入你所想要旋转的个数：");
+	scanf("%d", &n);
+	char arr[] = "abcdef";
+	left_move(arr, n);
+	printf("结果为：%s\n", arr);
+	return 0;
+}
