@@ -67,6 +67,7 @@ reverse(arr, arr + len - 1);//逆序整体
 //	printf("结果为：%s\n", arr);
 //	return 0;
 //}
+//穷举法，效率有点低
 int is_left_move(char* s1, char* s2) {
 	int len =strlen(s1);
 	int i = 0;
