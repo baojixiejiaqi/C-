@@ -1,0 +1,37 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+int  my_strcmp(char* str1,const char* str2) {
+	assert(str1 && str2);
+	while (*str1 == *str2)
+	{
+		if (*str1 == '\0') {
+			return 0;//相等就返回
+		}
+		str1++;
+		str2++;
+	}
+	if (*str1 > *str2) {
+		return 1;//大于
+	}
+	else {
+		return - 1;//小于
+	}
+}
+int main() 
+{
+	char arr1[30] = "abcdef";
+	char arr2[] = "abcdef";
+	int ret =my_strcmp(arr1, arr2);
+	if (ret > 0) {
+		printf("arr1 > arr2");
+	}
+	else if (ret < 0) {
+		printf("arr1 < arr2");
+	}
+	else {
+		printf("arr1 == arr2");
+	}
+	return 0;
+}
