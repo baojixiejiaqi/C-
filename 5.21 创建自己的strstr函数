@@ -24,7 +24,9 @@ char* my_strstr(const char* p1, const char* p2) {
 			{
 				return cur;//找到子串
 			}
-
+			if (*s1 == "\0") {
+				return NULL;//上面串没了，提前结束
+			}
 		}
 		cur++;//串的起始位置
 	}
