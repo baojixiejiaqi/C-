@@ -1,0 +1,46 @@
+#pragma warning(disable : 4996)
+#include<stdio.h>
+#include<assert.h>
+#include<string.h>
+char* my_strstr(const char* p1, const char* p2) {
+	assert(p1 != NULL);
+	assert(p2 != NULL);
+	char* s1 = NULL;
+	char* s2 = NULL;
+	char* cur =(char*) p1;
+	if (*p2 == '\0') 
+	{
+		return (char*)p1;
+	}
+	while (*cur)
+	{
+		s1 = cur;
+		s2 = (char*)p2;
+		while ((*s1) && (*s2) && (*s1 == *s2))//s1 s2不为\0 且 两者相等 都++ 判断后面是否相等
+		{
+			s1++;
+			s2++;
+			if (*s2 == '\0')
+			{
+				return cur;//找到子串
+			}
+
+		}
+		cur++;//串的起始位置
+	}
+	return NULL;//找不到子串
+}
+int main()
+{
+	char* p1 = "abbbcdefg";
+	char* p2 = "bbc";
+	char* ret = my_strstr(p1, p2);
+	if (ret == NULL)  //返回值为空指针 - 则代表字符串一 没有字符串二  
+	{
+		printf("无此字符串\n");
+	}
+	else {
+		printf("%s\n", ret);
+	}
+	return 0;
+}
