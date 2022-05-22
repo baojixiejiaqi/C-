@@ -1,0 +1,30 @@
+#pragma warning(disable : 4996)
+#include<stdio.h>
+#include<assert.h>
+#include<string.h>
+void* my_memcpy(void* dest, const void* src, size_t num) {
+	assert(dest != NULL);
+	assert(src != NULL);
+	void* ret = dest;//记录初始地址
+	while (num--)//每拷贝一个就减一
+	{
+		*(char*)dest = *(char*)src;//无符号整形不能解引用，强制转换为char*类型一个字节一个字节解引用拷贝
+		++(char*)src;//先转换后++
+		++(char*)dest;
+	}
+	return ret;
+}
+struct S
+{
+	char name[20];
+	int age;
+};
+int main() {
+	int arr1[] = { 1,2,3,4,5 };
+	int arr2[5] = { 0 };
+	struct S arr3[] = { {"张三",24},{"李四",33} };
+	struct S arr4[3] = { 0 };
+	my_memcpy(arr2, arr1, sizeof(arr1));
+	my_memcpy(arr4, arr3, sizeof(arr3));
+	
+}
