@@ -1,0 +1,45 @@
+void* my_memmove(void* dest, void* src, size_t count) {
+	assert(dest != NULL);
+	assert(src != NULL);
+#pragma warning(disable : 4996)
+#include<stdio.h>
+#include<assert.h>
+#include<string.h>
+void* my_memmove(void* dest, void* src, size_t count) {
+	assert(dest != NULL);
+	assert(src != NULL);
+  void* ret = dest;
+	if (dest < src)//从前往后拷贝
+	{
+		while (count--) {
+			*(char*)dest = *(char*)src;
+			++(char*)src;
+			++(char*)dest;
+		}
+	}
+	else//从后往前拷贝 
+	{
+		while (count--) 
+		{
+			*((char*)dest + count) = *((char*)src + count);//从4*n - 1 个字节往前移动 -以为char*解引用每一次只解引用一个字节
+		}
+	}
+	return ret;
+}
+struct S
+{
+	char name[20];
+	int age;
+};
+int main() {
+	int i = 0;
+	int arr1[10] = { 1,2,3,4,5,6,7,8,9,10 };
+	int arr2[10] = { 0 };
+	struct S arr3[] = { {"张三",24},{"李四",33} };
+	struct S arr4[3] = { 0 };
+	my_memmove(arr1+3, arr1, 20);
+	//my_memcpy(arr4, arr3, sizeof(arr3));
+	for (i = 0; i < 5; i++) {
+		printf("%d ", arr1[i]);
+	}
+}
