@@ -1,0 +1,23 @@
+#pragma warning(disable : 4996)
+#include<stdio.h>
+#include<assert.h>
+#include<string.h>
+int main()
+{
+	char arr[] = "I Am A Stundent";
+	int i = 0;
+	while (arr[i])
+	{
+		if (islower(arr[i]))//如果是小写字母就转大写
+    {
+			arr[i] = toupper(arr[i]);
+		}
+		else //如果是大写字母就转小写 
+    {
+			arr[i] = tolower(arr[i]);
+		}
+		i++;
+	}
+	printf("%s\n", arr);
+	return 0;
+}
