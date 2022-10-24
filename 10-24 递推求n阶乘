@@ -1,0 +1,24 @@
+#include<stdio.h> 
+#pragma warning(disable : 4996)
+#include<math.h>
+int mul(int x,int y)
+{
+	if (y == x)//如果自加数等于所求的n，则返回n
+	{
+		return x;
+	}
+	if (y < x) 
+  {
+		return mul(x, y + 1) * y;//如果自增数小于所求的n，则调用下一个n的函数mul并且乘以这个数
+	}
+}
+
+int main()
+{
+	int n = 0;
+	int i = 1;
+	scanf("%d", &n);
+	mul(n, i);
+	printf("%d\n",mul(n,i));
+	return 0;
+}
