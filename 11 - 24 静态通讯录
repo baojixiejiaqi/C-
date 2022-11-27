@@ -156,7 +156,7 @@ void Search(struct contract* p)//搜索功能
 	printf("请输入你搜索的名字:");
 	char name[max_name];
 	scanf("%s", name);
-	int ret = findname(p->data->name, name);
+	int ret = findname(p, name);
 	if (ret == -1)
 	{
 		printf("搜寻不到\n");
