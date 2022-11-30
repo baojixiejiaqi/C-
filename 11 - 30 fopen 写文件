@@ -1,0 +1,23 @@
+#include<assert.h>
+#include<math.h>
+#pragma warning(disable : 4996)
+#include<stdio.h>
+main() 
+{   //读文件
+    FILE* p = fopen("D:\\Afirst c learning\\c\\text.txt", "w");
+    if (NULL == p)
+    {
+        perror("fopen");
+        return 1;
+    }
+    //写文件
+    int i = 0;
+    for (i = 0; i < 26; i++)
+    {
+        fputc('a' + i, p);
+    }
+    //关闭文件
+    fclose(p);
+    p = NULL;
+    return 0;
+}
