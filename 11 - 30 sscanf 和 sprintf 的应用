@@ -1,0 +1,24 @@
+#include<assert.h>
+#include<math.h>
+#pragma warning(disable : 4996)
+#include<stdio.h>
+struct student 
+{
+    char name[100];
+    int age;
+    char sex[6];
+    float score;
+};
+int main() 
+{  
+    struct student s = { "蔡徐坤",22,"坤坤",66.6f };
+    struct student b = { 0 };
+    char arr[100] = { 0 };
+    //sscanf 从字符串中按照一定的格式读取出格式化的数据
+    //sprintf 把格式化的数据按照一定的格式转化到字符串中
+    sprintf(arr, "%s %d %s %lf", s.name, s.age, s.sex, s.score);
+    printf("%s\n", arr);
+    sscanf(arr, "%s %d %s %f", s.name, &(s.age), s.sex, &(s.score));
+    printf("%s %d %s %f", s.name, s.age, s.sex, s.score);
+    return 0;
+}
