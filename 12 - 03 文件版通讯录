@@ -1,0 +1,382 @@
+#include<Windows.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<assert.h>
+#pragma warning(disable : 4996)
+#define max_name  20
+#define max_sex 6
+#define max_tele 20
+#define max_add 30
+#define MAX 100
+#define capacity_max 3
+#define add_max 2
+struct peoinfor
+{
+	char name[max_name];
+	char sex[max_sex];
+	int age;
+	char tele[max_tele];
+	char add[max_add];
+};
+//通讯录-静态版本
+//typedef struct Contact
+//{
+//	PeoInfo data[MAX];//存放添加进来的人的信息
+//	int sz;//记录的是当前通讯录中有效信息的个数
+//}Contact;
+//通讯录-动态版本
+struct contract
+{
+	struct peoinfor* data;//指向动态申请的空间，用来存放联系人的信息
+	int sz;//记录的是当前通讯录中有效信息的个数
+	int capacity;//记录当前通讯录的最大容量
+};
+//初始化通讯录
+void Intcontract(struct contract* p);
+//声明添加功能
+void Add(struct contract* p);
+//声明查看功能
+void Show(struct contract* p);
+//声明删除功能
+void Del(struct contract* p);
+//声明修改功能
+void Modify(struct contract* p);
+//声明排序功能
+void Sort(struct contract* p);
+//声明查找功能
+void Search(struct contract* p);
+//检测增容的问题
+static int check_capacity(struct contract* p);
+//释放空间功能
+void Exit(struct  contract* p);
+//保存通讯录
+void Save(struct contract* p);
+//加载文件的信息到通讯录
+void Load(struct contract* p);
+//void Intcontract(struct contract* p)//静态初始化通讯录
+//{
+//	assert(p);
+//	p->sz = 0;
+//	memset(p->data, 0, MAX * sizeof(struct peoinfor));
+//}
+static int check_capacity(struct contract* p);
+void Load(struct contract* p)
+{
+	//打开文件
+	FILE* pl = fopen("C:\\Users\\三笠家丶嘉琦\\Desktop\\text.txt", "rb");
+	if (pl == NULL)
+	{
+		perror("Load::fopen");
+		return;
+	}
+	//读文件
+	struct peoinfor tmp = { 0 };
+	while (fread(&tmp, sizeof(struct peoinfor), 1, pl))
+	{
+		//考虑容量问题
+		check_capacity(p);
+		p->data[p->sz] = tmp;
+		p->sz++;
+	}
+	//关闭文件
+	fclose(pl);
+	pl = NULL;
+}
+void Intcontract(struct contract* p)//动态 初始化通讯录
+{
+	assert(p);
+	p->data = (struct peoinfor*)malloc(capacity_max * sizeof(struct peoinfor));
+	if (p->data == NULL)
+	{
+		perror("Intcontract()");
+		return;
+	}
+	p->sz = 0;
+	p->capacity = capacity_max;
+	Load(p);
+}
+
+//void Add(struct contract* p)//静态添加功能
+//{
+//	assert(p);
+//	if (p->sz == MAX)
+//	{
+//		printf("联系人已满，无法添加\n");
+//		return;
+//	}
+//	else
+//	{
+//		printf("请输入姓名：");
+//		scanf("%s", p->data[p->sz].name);
+//		printf("请输入性别：");
+//		scanf("%s", p->data[p->sz].sex);
+//		printf("请输入年龄：");
+//		scanf("%d", &(p->data[p->sz].age));
+//		printf("请输入电话号：");
+//		scanf("%s", p->data[p->sz].tele);
+//		printf("请输入地址：");
+//		scanf("%s", p->data[p->sz].add);
+//		p->sz++;
+//		printf("添加成功\n");
+//	}
+//}
+//检查容量功能
+static int check_capacity(struct contract* p)
+{
+	if (p->sz == p->capacity)
+	{
+		//增加容量
+		struct peoinfor* ptr = (struct peoinfor*)realloc(p->data, (p->capacity + add_max) * sizeof(struct peoinfor));
+		if (p != NULL)
+		{
+			p->capacity += add_max;
+			p->data = ptr;
+			printf("增容成功\n");
+			return 1;
+		}
+		else
+		{
+			perror("check_capacity()");
+			return 0;
+		}
+	}
+	else
+	{
+		return 1;
+	}
+}
+//动态添加功能
+void Add(struct contract* p)
+{
+	assert(p);
+	if (check_capacity(p) == 0)
+	{
+		return;
+	}
+	printf("请输入姓名：");
+	scanf("%s", p->data[p->sz].name);
+	printf("请输入性别：");
+	scanf("%s", p->data[p->sz].sex);
+	printf("请输入年龄：");
+	scanf("%d", &(p->data[p->sz].age));
+	printf("请输入电话号：");
+	scanf("%s", p->data[p->sz].tele);
+	printf("请输入地址：");
+	scanf("%s", p->data[p->sz].add);
+	p->sz++;
+	printf("添加成功\n");
+}
+
+
+void Show(struct contract* p)//展示功能
+{
+	int i = 0;
+	printf("%-10s\t%-6s\t%-6s\t%-12s\t%-20s\n", "名字", "性别", "年龄", "电话", "地址");
+	for (i = 0; i < p->sz; i++)
+	{
+		printf("%-10s\t%-6s\t%-6d\t%-12s\t%-20s\n", p->data[i].name, p->data[i].sex,
+			p->data[i].age, p->data[i].tele, p->data[i].add);
+	}
+}
+int findname(const struct contract* p, char name[])//名字比较
+{
+	int i = 0;
+	for (i = 0; i < p->sz; i++)
+	{
+		if (0 == strcmp(p->data[i].name, name))
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+void Del(struct contract* p)//删除功能
+{
+	char name[max_name];
+	printf("请输入你查找的名字：");
+	scanf("%s", &name);
+	int ret = findname(p, name);
+	if (ret == -1)
+	{
+		printf("查找不到,无法删除\n");
+	}
+	else
+	{
+		int j = 0;
+		for (j = ret; j < p->sz - 1; j++)
+		{
+			p->data[j] = p->data[j + 1];
+		}
+		p->sz--;
+		printf("删除成功\n");
+	}
+}
+
+void Modify(struct contract* p)//修改功能
+{
+	printf("请输入修改信息的姓名");
+	char name[max_name];
+	scanf("%s", name);
+	int ret = findname(p, name);
+	if (ret == -1)
+	{
+		printf("查找不到");
+	}
+	else
+	{
+		printf("请输入姓名：");
+		scanf("%s", p->data[ret].name);
+		printf("请输入性别：");
+		scanf("%s", p->data[ret].sex);
+		printf("请输入年龄：");
+		scanf("%d", &(p->data[ret].age));
+		printf("请输入电话号：");
+		scanf("%s", p->data[ret].tele);
+		printf("请输入地址：");
+		scanf("%s", p->data[ret].add);
+	}
+}
+
+int cmp_age(const void* e1, const void* e2)//通过比较年龄大小排序
+{
+	return ((struct peoinfor*)e1)->age - ((struct peoinfor*)e2)->age;
+}
+void Sort(struct contract* p)//排序功能
+{
+	assert(p);
+	qsort(p->data, p->sz, sizeof(struct peoinfor), cmp_age);
+	printf("排序成功\n");
+}
+
+
+void Search(struct contract* p)//搜索功能
+{
+	printf("请输入你搜索的名字:");
+	char name[max_name];
+	scanf("%s", &name);
+	int ret = findname(p, name);
+	if (ret == -1)
+	{
+		printf("搜寻不到\n");
+	}
+	else
+	{
+		printf("搜寻成功\n");
+		printf("%-10s\t%-6s\t%-6s\t%-12s\t%-20s\n", "名字", "性别", "年龄", "电话", "地址");
+		printf("%-10s\t%-6s\t%-6d\t%-12s\t%-20s\n", p->data[ret].name, p->data[ret].sex,
+			p->data[ret].age, p->data[ret].tele, p->data[ret].add);
+	}
+}
+//保存功能
+void Save(struct contract* p)
+{
+	//打开文件
+	FILE* ps = fopen("C:\\Users\\三笠家丶嘉琦\\Desktop\\text.txt", "wb");
+	if (ps == NULL)
+	{
+		perror("Save::fopen");
+		return;
+	}
+	//写文件
+	int i = 0;
+	for (i = 0; i < p->sz; i++)
+	{
+		fwrite(p->data + i, sizeof(struct peoinfor), 1, ps);
+	}
+	//关闭文件
+	fclose(ps);
+	ps = NULL;
+}
+//释放功能
+void Exit(struct contract* p)
+{
+	free(p->data);
+	p->data = NULL;
+	p->sz = 0;
+	p->capacity = 0;
+}
+#define _CRT_SECURE_NO_WARNINGS 1
+//测试通讯录
+void menu()
+{
+	printf("************************************\n");
+	printf("****    1.Add         2.Del     ****\n");
+	printf("****    3.Search      4.Modify  ****\n");
+	printf("****    5.Show        6.Sort    ****\n");
+	printf("****    0.exit                  ****\n");
+	printf("************************************\n");
+}
+enum input
+{
+	EXIT,
+	ADD,
+	DEL,
+	SEARCH,
+	MODIFY,
+	SHOW,
+	SORT
+
+};
+int main()
+{
+	int input = 0;
+	//创建通讯录
+	struct contract con;
+	//初始化通讯录
+	Intcontract(&con);
+	do
+	{
+		menu();
+		printf("请输入选择：");
+		scanf("%d", &input);
+		switch (input)
+		{
+		case ADD:
+			Add(&con);
+			Sleep(1000);
+			system("cls");
+			break;
+		case DEL:
+			Del(&con);
+			Sleep(1000);
+			system("cls");
+			break;
+		case SEARCH:
+			Search(&con);
+			Sleep(1000);
+			system("cls");
+			break;
+		case MODIFY:
+			Modify(&con);
+			Sleep(1000);
+			system("cls");
+			break;
+		case SHOW:
+			Show(&con);
+			Sleep(1000);
+			system("cls");
+			break;
+		case SORT:
+			Sort(&con);
+			Sleep(1000);
+			system("cls");
+			break;
+		case EXIT:
+			Save(&con);
+			printf("保存成功\n");
+			Exit(&con);
+			printf("退出成功\n");
+			//Sleep(1000);
+			//system("cls");
+			break;
+		default:
+			printf("输入错误,请重新输入：\n");
+			Sleep(100);
+			system("cls");
+			break;
+		}
+	} while (input);
+	return 0;
+}
