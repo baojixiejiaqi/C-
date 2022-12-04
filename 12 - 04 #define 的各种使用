@@ -1,0 +1,33 @@
+#include<stdio.h>
+//#define SQUAR(x) ((x) + (x))
+//int main()
+//{
+//	int i = 5;
+//	printf("%d\n", 10*SQUAR(i));
+//	return 0;
+//}
+//int main()
+//{
+//	char* p = "hello bit";
+//	printf("%s\n", p);
+//	printf("hello""bit\n");
+//	return 0;
+//}
+//#define M 10
+//#define MAX(x,y) ((x)>(y)?(x):(y))
+//int main()
+//{
+//	int m = MAX(2 + 3, M);
+//	printf("%d", m);
+//	return 0;
+//}
+#define PRINT(val ,format)	printf("The value of "#val " is "format"\n",val)
+int main()
+{
+	int a = 5;
+	PRINT(a, "%d");
+	int b = 8;
+	PRINT(b, "%d");
+	double c = 10.0;
+	PRINT(c, "%lf");
+}
