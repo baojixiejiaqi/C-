@@ -82,6 +82,7 @@ void findmine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 	int x = 0;
 	int y = 0;
 	int win = 0;
+
 	while (win < row * col - EASY_COUNT)
 	{
 		printf("请输入你选择的坐标:\n");
