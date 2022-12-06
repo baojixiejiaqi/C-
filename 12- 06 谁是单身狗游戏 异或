@@ -1,0 +1,40 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+int main()
+{
+	int arr[] = { 1,1,2,2,3,3,4,4,5,5,6,6,7,9 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	int ret = 0;
+	int i = 0;
+	int post = 0;
+	//算出全体异或值其实相当于算出两个单身数的异或值，因为两个数一样异或就成0了，0异或num == num
+	for (i = 0; i < sz; i++)
+	{
+		ret ^= arr[i];
+	}
+	//找出这两数最小位的位数的不同
+	for (i = 0; i < 32; i++)
+	{
+		if (((ret >> i) & 1) == 1)
+		{
+			post = i;
+			break;
+		}
+	}
+	int num1 = 0;
+	int num2 = 0;
+	//通过两个最小位数的不同，找出两个不同的数
+	for (i = 0; i < sz; i++)
+	{
+		if (((arr[i] >> post) & 1 )== 1)
+		{
+			num1 = arr[i];
+		}
+		else
+		{
+			num2 = arr[i];
+		}
+	}
+	printf("%d %d", num1, num2);
+	return 0;
+}
