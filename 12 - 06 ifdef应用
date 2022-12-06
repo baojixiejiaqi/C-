@@ -1,0 +1,68 @@
+#include<stdio.h>
+//判断成立
+//#define __DEBUG__
+//int main()
+//{
+//	int i = 0;
+//	int arr[10] = { 0 };
+//	for (i = 0; i < 10; i++)
+//	{
+//		arr[i] = i;
+//#ifdef __DEBUG__
+//		printf("%d\n", arr[i]);
+//#endif __DEBUG__	
+//	}
+//	return 0;
+//}
+// 条件判断
+//int main()
+//{
+//#if 2>1
+//	printf("yes 1\n");
+//#elif 1<3
+//	printf("yes 2\n");
+//#else 
+//	printf("no 1\n");
+//#endif 
+//	
+//#if defined (MAX)
+//	printf("hehe\n");
+//#endif
+//
+//	return 0;
+//#if !defined (MAX)
+//	printf("hehe\n");
+//#endif
+//
+//	return 0;
+//#ifdef MAX
+//	printf("hehe\n");
+//#endif
+//
+//	return 0;
+//#ifndef MAX
+//	printf("hehe\n");
+//#endif
+//
+//	return 0;
+//
+//}
+
+
+int main()
+{
+#define m1 
+#if defined (OS_MSDOS)
+	#ifdef 1>2
+	printf("hehe 1\n");
+	#endif
+	#ifdef 2 < 3
+	printf("hehe 2\n");
+	#endif
+#elif defined (OS_UNIX)
+	#ifdef 1>0
+	printf("hehe\n");
+	#endif
+#endif
+	return 0;
+}
