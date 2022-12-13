@@ -42,3 +42,4 @@ int main()
     reaverse(arr, arr + len - 1);//再次打印从逆序 到正序
     printf("%s\n", arr);
 }
+
