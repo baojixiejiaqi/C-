@@ -1,0 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#define SWAP_NUM(n)  n = (((n&0xaaaaaaaa)>>1)+((n&0x55555555)<<1)) //奇数位与a 偶数位与5
+int main()
+{	
+	int  a = 0;
+	scanf("%d", &a);
+	printf("交换前：%d\n", a);
+	SWAP_NUM(a);
+	printf("交换后：%d\n", a);
+	return 0;
+}
