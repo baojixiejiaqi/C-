@@ -1,0 +1,16 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+struct S
+{
+	char a;
+	int b;
+	char c;
+};
+#define OFFSETOF(s_type,m_name)   (int)&(((s_type*)0)->m_name)//取出s_type变量 从0到m_name成员的地址
+int main()
+{
+	printf("%d\n", OFFSETOF(struct S, a));
+	printf("%d\n", OFFSETOF(struct S, b));
+	printf("%d\n", OFFSETOF(struct S, c));
+	return 0;
+}
