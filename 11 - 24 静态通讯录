@@ -9,7 +9,6 @@
 #define max_tele 20
 #define max_add 30
 #define MAX 100
-
 struct peoinfor
 {
 	char name[max_name];
@@ -38,75 +37,63 @@ void Sort(struct contract* p);
 //声明查找功能
 void Search(struct contract* p);
 
-void Intcontract(struct contract* p)//初始化通讯录
+void Intcontract(struct contract* p)
 {
 	assert(p);
 	p->sz = 0;
 	memset(p->data, 0, MAX * sizeof(struct peoinfor));
 }
 
-void Add(struct contract* p)//添加功能
+void Add(struct contract* p)//添加功能思路：首先判断是否占满创建内存的空间，满则提示即返回，没满就输入信息，sz指向下一个
 {
 	assert(p);
 	if (p->sz == MAX)
 	{
-		printf("联系人已满，无法添加\n");
+		printf("无法再添加\n");
 		return;
 	}
 	else
 	{
-		printf("请输入姓名：");
+		printf("请输入姓名:");
 		scanf("%s", p->data[p->sz].name);
-		printf("请输入性别：");
+		printf("请输入性别:");
 		scanf("%s", p->data[p->sz].sex);
 		printf("请输入年龄：");
-		scanf("%d", &(p->data[p->sz].age));
-		printf("请输入电话号：");
+		scanf("%d",&(p->data[p->sz].age));
+		printf("请输入电话号:");
 		scanf("%s", p->data[p->sz].tele);
-		printf("请输入地址：");
+		printf("请输入地址:");
 		scanf("%s", p->data[p->sz].add);
 		p->sz++;
 		printf("添加成功\n");
 	}
 }
-
-void Show(struct contract* p)//展示功能
+int find_name(struct contract* p, char name[])//通过字符串函数strcmp来比较想要查找的名字和仓库里的是否医院
 {
-	int i = 0;
-	printf("%-10s\t%-6s\t%-6s\t%-12s\t%-20s\n", "名字", "性别", "年龄", "电话", "地址");
+	int i = 0;//一个一个判断
 	for (i = 0; i < p->sz; i++)
 	{
-		printf("%-10s\t%-6s\t%-6d\t%-12s\t%-20s\n", p->data[i].name, p->data[i].sex,
-			p->data[i].age, p->data[i].tele, p->data[i].add);
-	}
-}
-int findname(const struct contract* p, char name[])//名字比较
-{
-	int i = 0;
-	for (i = 0; i < p->sz; i++)
-	{
-		if (0 == strcmp(p->data[i].name, name))
+		if ((strcmp(name, p->data[i].name) == 0))
 		{
 			return i;
 		}
 	}
-	return -1;
+	return -1;//没有返回-1
 }
-
-void Del(struct contract* p)//删除功能
+void Del(struct contract* p)//删除功能思路：先创建一个临时的char name[]数组，用来查找库里的名字
 {
 	char name[max_name];
-	printf("请输入你查找的名字：");
-	scanf("%s", &name);
-	int ret = findname(p, name);
-	if (ret == -1)
+	printf("请输入你查找的名字:");
+	scanf("%s", name);
+	int ret = find_name(p, name);
+	if (ret == -1)//-1 返回
 	{
-		printf("查找不到,无法删除\n");
+		printf("查询不到\n");
 	}
 	else
 	{
 		int j = 0;
-		for (j = ret; j < p->sz - 1; j++)
+		for (j = ret; j < p->sz - 1; j++)//找到后，把后面的都往前挪一个
 		{
 			p->data[j] = p->data[j + 1];
 		}
@@ -114,16 +101,43 @@ void Del(struct contract* p)//删除功能
 		printf("删除成功\n");
 	}
 }
-
-void Modify(struct contract* p)//修改功能
+void Show(struct contract* p)//展示功能
 {
-	printf("请输入修改信息的姓名");
-	char name[max_name];
+	int i = 0;
+	printf("%-10s\t%-6s\t%-6s\t%-12s\t%-20s\n", "名字", "性别", "年龄", "电话", "地址");//水平制表
+	for (i = 0; i < p->sz; i++)
+	{
+		printf("%-10s\t%-6s\t%-6d\t%-12s\t%-20s\n", p->data[i].name,
+			p->data[i].sex, p->data[i].age, p->data[i].tele, p->data[i].add);
+	}
+}
+void Search(struct contract* p)//查找功能
+{
+	printf("请输入你查找的人信息：");
+	char name[max_name];//创建临时数组用来查找名字
 	scanf("%s", name);
-	int ret = findname(p, name);
+	int ret = find_name(p,name);
 	if (ret == -1)
 	{
-		printf("查找不到");
+		printf("查无此人\n");
+	}
+	else
+	{
+		printf("搜索成功\n");
+		printf("%-10s\t%-6s\t%-6s\t%-12s\t%-20s\n", "名字", "性别", "年龄", "电话", "地址");
+		printf("%-10s\t%-6s\t%-6d\t%-12s\t%-20s\n", p->data[ret].name,
+			p->data[ret].sex, p->data[ret].age, p->data[ret].tele, p->data[ret].add);
+	}
+}
+void Modify(struct contract* p)//修改功能
+{
+	printf("请输入你修改信息的姓名:");
+	char name[max_name];
+	scanf("%s", name);////创建临时数组用来查找名字
+	int ret = find_name(p,name);
+	if (ret == -1)
+	{
+		printf("查询不到\n");
 	}
 	else
 	{
@@ -139,39 +153,17 @@ void Modify(struct contract* p)//修改功能
 		scanf("%s", p->data[ret].add);
 	}
 }
-
-int cmp_age(const void* e1, const void* e2)//通过比较年龄大小排序
+int cmp_age(const void* e1, const void* e2)//qsort的自定义排序
 {
 	return ((struct peoinfor*)e1)->age - ((struct peoinfor*)e2)->age;
 }
-void Sort(struct contract* p)//排序功能
+void Sort(struct contract* p)//qsort功能
 {
 	assert(p);
 	qsort(p->data, p->sz, sizeof(struct peoinfor), cmp_age);
+	printf("排序成功，已打印\n");
+	Show(p);
 }
-
-
-void Search(struct contract* p)//搜索功能
-{
-	printf("请输入你搜索的名字:");
-	char name[max_name];
-	scanf("%s", name);
-	int ret = findname(p, name);
-	if (ret == -1)
-	{
-		printf("搜寻不到\n");
-	}
-	else
-	{
-		printf("搜寻成功\n");
-		printf("%-10s\t%-6s\t%-6s\t%-12s\t%-20s\n", "名字", "性别", "年龄", "电话", "地址");
-		printf("%-10s\t%-6s\t%-6d\t%-12s\t%-20s\n", p->data[ret].name, p->data[ret].sex,
-			p->data[ret].age, p->data[ret].tele, p->data[ret].add);
-	}
-}
-
-//测试通讯录
-
 void menu()
 {
 	printf("************************************\n");
@@ -239,4 +231,3 @@ int main()
 	} while (input);
 	return 0;
 }
-
